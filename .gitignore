@@ -1,6 +1,14 @@
 /target
-/.idea
-/.vscode
+
+# IDE files
+.idea
+.vscode
+
+# Rust artifacts
+**/*.rs.bk
+Cargo.lock
+# We need to keep the main lock file
+!/Cargo.lock
 
 # Bevy Assets
 assets/**/*.meta
