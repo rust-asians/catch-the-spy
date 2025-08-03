@@ -10,9 +10,7 @@ We have two permanent "hub" branches:
 through rigorous testing.
 
 `dev` is where completed features are compiled to.
-Commits to `dev` are eventually merged into `main` as releases as
-described
-in [here](#making-releases).
+Commits to `dev` are eventually merged into `main` as releases as described in [here](#making-releases).
 
 ### Work branches
 
@@ -28,30 +26,61 @@ describe their function. Here are all the prefixes that are used in this project
 - `bugfix/` is for bugfixes (duh)
     - `bugfix/nuclear-bomb-healing`
 - `hotfix/` is for fixing bugs that are in `main` that can be merged back to `main` without having to wait for the next
-  release
+  release from `dev` (see process [here](#hotfixing))
     - `hotfix/infinite-money`
 - `docs/` is for changes that purely involve the documentation
     - `docs/make-license-evil`
 
 After work on one of the work branches is complete, a pull request must be created to merge the changes from that branch
 to the appropriate hub branch (usually `dev`) upon approval.
+Make sure to merge all changes from `dev` into your branch first before making the pull request to make sure your
+changes can be merged into `dev` without any conflicts. 
 
 Of course, you are free to make as many branches as you like. Sub-branch your own branch or someone else's. Merge them
 back into a single branch. All those are fine, as long as you are not merging changes directly into a hub branch without
-a
-pull request. However, **please be polite**. Although technically you can modify someone else's branch and even merge
-your own
-branch into it, please don't without their permission as you might mess up their workflow.
+a pull request. However, **please be polite**. Although technically you can modify someone else's branch and even merge
+your own branch into it, please don't without their permission as you might mess up their workflow.
 
 ### Making releases
 
-When we are ready to make a release, we make a branch off `dev` named with the release version (e.g., `release/v0.69`).
+When we are ready to make a release, we make a branch off `dev` named with the release version (e.g.,
+`release/v0.69.0`).
+Follow [semantic versioning](http://semver.org/).
+
 Contributors are still free to make pull requests to `dev` but must be aware that their changes will not be included in
 the upcoming release.
 
 We then test this release branch until we are sure that it's bug-free and upholds our standards. Hotfixes can be made
-for this release via a `hotfix/` branch, and can be merged back into the release branch via a pull request.
+for this release via a `hotfix/` branch, and can be merged back into the release branch via a pull request. The process
+is the same as [here](#hotfixing), but instead of branching off and merging back into `main`, you branch off and merge
+back into the release branch.
 
-After everything is ready and tested, it is merged into `main` and a **release tag** is made for it via GitHub's
+A pull request to merge the release branch into `main` can be made as soon as the release branch was made, but it should
+only be approved once it passed all testing and code review.
+
+If it did pass, it is merged into `main` and a **release tag** is made for it via GitHub's
 releases feature (not just a basic git tag) and with a comprehensive changelog. All changes from this branch must also
-be merged into `dev`. 
+be merged into `dev`.
+
+### Hotfixing
+
+Sometimes, you need to fix something critical without having to merge it into `dev` and wait for that to be included in
+the next release.
+In fact, forcing a hotfix to go through the same process will compromise the next release, since we
+might have to rush it, forcing us to suddenly have to test a bunch of features in `dev` quickly just so we can release
+the fix.
+
+In this case, it would be best to hotfix.
+You can do this by making a hotfix branch off of `main`.
+Name it `hotfix/{release-version}-{name}`, e.g., `hotfix/v0.69.1-infinite-money`.
+The release version would be the version it branched off of, with the _patch number_ incremented.
+Then, make your changes there.
+Do not add any features.
+Make the minimum amount of changes to fix the critical bug to make reviewing it easier.
+
+After that, it will go through the same process as a [regular release branch](#making-releases), with a **release tag**
+associated with it upon merging into `main`.
+
+If a fix is deemed not critical enough to warrant a hotfix, any pull request to main will be rejected. 
+Your fix ain't hot enough.
+In that case, merge changes from `dev` instead and make a pull request to merge it into `dev` instead.
