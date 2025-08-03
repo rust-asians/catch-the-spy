@@ -2,6 +2,9 @@ pub fn add(left: u64, right: u64) -> u64 {
     left + right
 }
 
+#[derive(Debug)]
+pub struct Hello;
+
 #[cfg(test)]
 mod tests {
     use super::*;

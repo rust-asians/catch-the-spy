@@ -1,6 +1,8 @@
 use bevy::prelude::*;
+use domain::Hello;
 
 fn main() {
+    println!("{Hello:?}");
     App::new()
         .add_plugins(DefaultPlugins)
         .add_systems(Startup, spawn_magical_orb)
