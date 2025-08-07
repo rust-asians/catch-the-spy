@@ -1,8 +1,8 @@
-/target
+**/target
 
 # IDE files
-.idea
-.vscode
+**/.idea
+**/.vscode
 
 # Rust artifacts
 **/*.rs.bk
