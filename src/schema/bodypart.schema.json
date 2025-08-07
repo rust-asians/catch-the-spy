@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "body-parts.schema.json",
+  "title": "Body part",
+  "description": "Defines how damage is applied when hitting a specific body part",
+  "type": "object",
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "hitRate": {
+      "description": "The chances of hitting that body part. 0 being impossible and 1 being guaranteed. Body hit rate is added to weapon accuracy and  current pressure to determine if the attack is a hit or miss.",
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "damageMultiplier": {
+      "description": "Multiplied to the weapon's damage before being applied to the receiver",
+      "type": "number",
+      "minimum": 0.0
+    },
+    "damageReduction": {
+      "description": "Subtracted from the total damage received",
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "hitRate",
+    "damageMultiplier",
+    "damageReduction"
+  ],
+  "additionalProperties": false
+}

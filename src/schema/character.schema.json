@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "character.schema.json",
+  "title": "Character",
+  "description": "A character that could either be the player or AI",
+  "type": "object",
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "health": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 0
+    },
+    "money": {
+      "description": "Money is used to purchase weapons and utilities. A set value of money is given per level. Bonus Amount may also be considered when doing bonus objectives like a no damage run.",
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 0
+    },
+    "pressure": {
+      "description": "Pressure is a mechanic to minimize player frustration from the chance of being too unlucky by missing most attacks. Every missed attack builds pressure (according to the pressure build rate innate to the used weapon). This pressure is then used to calculate the final hit rate (innate bodypart hit rate + weapon accuracy + current pressure). And after a successful attack hit, pressure is reset to 0, repeating the whole process again.",
+      "type": "number",
+      "minimum": 0.0
+    },
+    "utilities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The ID of the utility",
+            "type": "string"
+          },
+          "count": {
+            "description": "The amount of this utility the character has",
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "health",
+    "currency",
+    "pressure",
+    "utilities"
+  ],
+  "additionalProperties": false
+}

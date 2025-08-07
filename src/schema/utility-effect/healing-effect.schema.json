@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "healing-effect.schema.json",
+  "title": "Healing effect",
+  "description": "Heals the user",
+  "type": "object",
+  "properties": {
+    "amount": {
+      "description": "The amount of HP this effect gives to the user",
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "required": ["amount"],
+  "additionalProperties": false
+}

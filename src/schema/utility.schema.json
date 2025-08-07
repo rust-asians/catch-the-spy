@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "utility.schema.json",
+  "title": "Utility",
+  "description": "An item usable during combat as an alternative to firing a weapon.",
+  "type": "object",
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "cost": {
+      "description": "This utility's price in money.",
+      "type": "number",
+      "minimum": 0
+    },
+    "effects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "class": {
+            "description": "The type of this effect",
+            "enum": ["healing", "damage-reduction", "damage-boost"]
+          },
+          "values": {
+            "oneOf": [
+              { "$ref": "utility-effect/healing-effect.schema.json" },
+              { "$ref": "utility-effect/damage-reduction.schema.json" },
+              { "$ref": "utility-effect/damage-boost.schema.json" }
+            ]
+          }
+        },
+        "required": ["class", "values"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["id", "name", "cost", "effects"],
+  "additionalProperties": false
+}

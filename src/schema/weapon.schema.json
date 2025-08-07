@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "weapon.schema.json",
+  "title": "Weapon",
+  "description": "Defines the stats of a weapon",
+  "type": "object",
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "classId": {
+      "description": "The ID of the weapon's class",
+      "type": "string"
+    },
+    "speed": {
+      "description": "Determines the turn-order in a whole level. It influences who gets the first turn ever, as well as the ratio of turns each side gets. For example: My speed is 3, enemy speed is 1 - I get to move first and a total of three times, before the enemy does. A deadlock mechanic maybe implemented in the event of both sides having the same speed to determine who gets to move first.",
+      "type": "number",
+      "minimum": 0.0
+    },
+    "damage": {
+      "description": "The flat damage this weapon does",
+      "type": "number",
+      "minimum": 0.0
+    },
+    "accuracy": {
+      "description": "The chances of this weapon hitting. 0 being impossible and 1 being guaranteed. Weapon accuracy is added to the current pressure level and final the bodypart's hitrate to determine if the attack hits or not.",
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "pressureBuildRate": {
+      "description": "The amount of pressure the user of this weapon gains every time it misses. Current pressure amount is added alongside the weapon's accuracy and the innate bodypart's hit rate to determine the final hit rate.",
+      "type": "number",
+      "minimum": 0.0
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "classId",
+    "speed",
+    "damage",
+    "accuracy",
+    "pressureBuildRate"
+  ],
+  "additionalProperties": false
+}
