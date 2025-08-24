@@ -1,2 +1,2 @@
-mod clamped_ratio;
-mod auto_clamped_ratio;
+pub mod auto_clamped_ratio;
+pub mod clamped_ratio;

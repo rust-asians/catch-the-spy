@@ -4,6 +4,7 @@ mod pressure;
 mod body_part;
 mod name;
 mod hit_rate;
+mod damage;
 
 pub fn add(left: u64, right: u64) -> u64 {
     left + right

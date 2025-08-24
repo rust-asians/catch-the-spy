@@ -1,1 +1,3 @@
-pub struct Pressure(f32);
+use units::ratio::clamped_ratio::ClampedRatio;
+
+pub struct Pressure(ClampedRatio);
