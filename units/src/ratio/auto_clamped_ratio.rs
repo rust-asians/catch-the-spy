@@ -1,10 +1,46 @@
-use std::ops::{Add, Div, Mul, Sub};
 use crate::ratio::clamped_ratio::{ClampedRatio, ClampedRatioError};
+use std::ops::{Add, Div, Mul, Sub};
 
+/// A floating-point value inside [0, 1].
+///
+/// Unlike `ClampedRatio`, 
+/// `AutoClampedRatio` automatically rounds values `< 0` to `0` and `> 1` to `1`.
+///
+/// This is basically a convenience wrapper around `ClampedRatio`
+/// that provides a default behavior when encountering out-of-bound values.
+///
+/// However, please prefer using `ClampedRatio` as field, parameter, and return types,
+/// since this implementation assumes that you want the auto-coercing behavior,
+/// which is not always the obvious default behavior.
+///
+/// Example:
+///
+/// ```
+/// use units::ratio::auto_clamped_ratio::AutoClampedRatio;
+///
+/// fn foo(
+///     a: AutoClampedRatio,
+///     b: AutoClampedRatio,
+///     c: AutoClampedRatio,
+/// ) -> AutoClampedRatio {
+///     a + b - c
+/// }
+/// ```
+///
+/// In the example above, if `a + b > 100` and you subtract `c`, you will lose the amount that was
+/// over `100` after doing `a + b`, since auto-coercion is done after every operation.
+/// This happens even if `a + b - c` would have been `< 100` if we did the operations on the
+/// underlying values instead.
+///
+/// `AutoClampedRatio` should be used as an opt-in to the auto-coercion behavior as needed;
+/// i.e., right when you are about to do the operations, by using `ClampedRatio::auto_clamp`.
 #[derive(PartialEq, PartialOrd, Copy, Clone, Debug, Default)]
 pub struct AutoClampedRatio(ClampedRatio);
 
 impl AutoClampedRatio {
+    /// # Safety
+    ///
+    /// The caller must guarantee that `value` is inside `[0, 1]`.
     pub unsafe fn new_unchecked(value: f32) -> Self {
         unsafe { Self(ClampedRatio::new_unchecked(value)) }
     }
@@ -19,6 +55,14 @@ impl AutoClampedRatio {
             ClampedRatioError::Overflow => ClampedRatio::one(),
         });
         Self::from_clamped_ratio(clamped)
+    }
+
+    pub fn zero() -> Self {
+        Self::from_clamped_ratio(ClampedRatio::zero())
+    }
+
+    pub fn one() -> Self {
+        Self::from_clamped_ratio(ClampedRatio::one())
     }
 
     pub fn into_clamped_ratio(self) -> ClampedRatio {
@@ -66,11 +110,10 @@ impl Mul for AutoClampedRatio {
     }
 }
 
-
 impl Div for AutoClampedRatio {
     type Output = AutoClampedRatio;
 
     fn div(self, rhs: Self) -> Self::Output {
-        Self::new(self.get() * rhs.get())
+        Self::new(self.get() / rhs.get())
     }
 }

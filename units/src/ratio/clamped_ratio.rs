@@ -1,6 +1,14 @@
 use crate::ratio::auto_clamped_ratio::AutoClampedRatio;
 
 /// A floating-point value inside [0, 1].
+///
+/// `ClampedRatio` does not assume how underflows and overflows should be handled.
+/// For this reason, this type should be the default over other implementations as
+/// field, parameter, and return types, and other implementations should just be used as needed
+/// on the use site.
+///
+/// If you want underflows and overflows to be automatically coerced to 0 and 1 respectively,
+/// use `AutoClampedRatio` by calling `ClampedRatio::auto_clamp`.
 #[derive(PartialEq, PartialOrd, Copy, Clone, Debug, Default)]
 pub struct ClampedRatio(f32);
 
@@ -10,6 +18,9 @@ pub enum ClampedRatioError {
 }
 
 impl ClampedRatio {
+    /// # Safety
+    ///
+    /// The caller must guarantee that `value` is inside `[0, 1]`.
     pub unsafe fn new_unchecked(value: f32) -> Self {
         Self(value)
     }
