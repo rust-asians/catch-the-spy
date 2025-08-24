@@ -9,14 +9,12 @@
     "name": { "type": "string" },
     "health": {
       "type": "integer",
-      "minimum": 0,
-      "maximum": 0
+      "minimum": 0
     },
     "money": {
       "description": "Money is used to purchase weapons and utilities. A set value of money is given per level. Bonus Amount may also be considered when doing bonus objectives like a no damage run.",
       "type": "integer",
-      "minimum": 0,
-      "maximum": 0
+      "minimum": 0
     },
     "pressure": {
       "description": "Pressure is a mechanic to minimize player frustration from the chance of being too unlucky by missing most attacks. Every missed attack builds pressure (according to the pressure build rate innate to the used weapon). This pressure is then used to calculate the final hit rate (innate bodypart hit rate + weapon accuracy + current pressure). And after a successful attack hit, pressure is reset to 0, repeating the whole process again.",
@@ -37,7 +35,9 @@
             "type": "integer",
             "minimum": 1
           }
-        }
+        },
+        "required": ["id", "count"],
+        "additionalProperties": false
       }
     }
   },
