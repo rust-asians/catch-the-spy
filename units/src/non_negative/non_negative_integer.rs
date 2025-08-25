@@ -22,10 +22,9 @@ macro_rules! non_negative_integer {
             }
 
             pub fn new(value: $inner_type) -> Option<Self> {
-                if value >= 0 {
-                    Some(unsafe { Self::new_unchecked(value) })
-                } else {
-                    None
+                match value {
+                    0.. => Some(unsafe { Self::new_unchecked(value) }),
+                    _ => None,
                 }
             }
 
