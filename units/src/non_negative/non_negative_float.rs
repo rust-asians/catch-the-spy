@@ -1,9 +1,9 @@
-use std::ops::{Add, Div, Mul};
 use crate::non_negative::non_negative_operators::non_negative_operators;
+use std::ops::{Add, Div, Mul};
 
-macro_rules! non_negative_integer {
+macro_rules! non_negative_float {
     ($name: ident, $inner_type: ty) => {
-        #[derive(Eq, PartialEq, Ord, PartialOrd, Copy, Clone, Hash, Debug)]
+        #[derive(PartialEq, PartialOrd, Copy, Clone, Debug)]
         pub struct $name($inner_type);
 
         impl $name {
@@ -14,19 +14,19 @@ macro_rules! non_negative_integer {
                 Self(value)
             }
 
+            pub fn new(value: $inner_type) -> Option<Self> {
+                match value {
+                    0.0.. => Some(unsafe { Self::new_unchecked(value) }),
+                    _ => None,
+                }
+            }
+
             pub fn zero() -> Self {
-                unsafe { Self::new_unchecked(0) }
+                unsafe { Self::new_unchecked(0.0) }
             }
 
             pub fn one() -> Self {
-                unsafe { Self::new_unchecked(1) }
-            }
-
-            pub fn new(value: $inner_type) -> Option<Self> {
-                match value {
-                    0.. => Some(unsafe { Self::new_unchecked(value) }),
-                    _ => None,
-                }
+                unsafe { Self::new_unchecked(1.0) }
             }
 
             pub fn get(self) -> $inner_type {
@@ -38,9 +38,5 @@ macro_rules! non_negative_integer {
     };
 }
 
-non_negative_integer!(NonNegativeI8, i8);
-non_negative_integer!(NonNegativeI16, i16);
-non_negative_integer!(NonNegativeI32, i32);
-non_negative_integer!(NonNegativeI64, i64);
-non_negative_integer!(NonNegativeI128, i128);
-non_negative_integer!(NonNegativeIsize, isize);
+non_negative_float!(NonNegativeF32, f32);
+non_negative_float!(NonNegativeF64, f64);
