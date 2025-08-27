@@ -1,1 +1,1 @@
-pub struct Name(String);
+pub struct Name(pub String);

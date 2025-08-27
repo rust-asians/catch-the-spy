@@ -1,3 +1,3 @@
-use units::non_negative::non_negative_float::NonNegativeF32;
+use isotopes::non_zero::non_zero_floats::NonNegativeF32;
 
 pub struct DamageMultiplier(pub NonNegativeF32);

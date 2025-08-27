@@ -1862,7 +1862,7 @@ dependencies = [
 name = "domain"
 version = "0.1.0"
 dependencies = [
- "units",
+ "isotopes",
 ]
 
 [[package]]
@@ -2466,6 +2466,12 @@ dependencies = [
  "core-foundation-sys",
  "mach2",
 ]
+
+[[package]]
+name = "isotopes"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3888f17ea5a23af6097e7f1004a361b0207dbab98f545bb84dd87e4eaf7e9f23"
 
 [[package]]
 name = "itertools"
@@ -4180,10 +4186,6 @@ name = "unicode-xid"
 version = "0.2.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ebc1c04c71510c7f702b52b7c350734c9ff1295c464a03335b00bb84fc54f853"
-
-[[package]]
-name = "units"
-version = "0.1.0"
 
 [[package]]
 name = "uuid"

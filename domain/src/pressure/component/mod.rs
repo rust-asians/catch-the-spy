@@ -1,3 +1,3 @@
-use units::ratio::clamped_ratio::ClampedRatio;
+use isotopes::ratio::clamped_ratio::ClampedRatio32;
 
-pub struct Pressure(ClampedRatio);
+pub struct Pressure(pub ClampedRatio32);
