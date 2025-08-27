@@ -1,4 +1,4 @@
-use crate::ratio::auto_clamped_ratio::AutoClampedRatio;
+use crate::ratio::auto_clamped_ratio::SaturatingClampedRatio;
 
 /// A floating-point value inside [0, 1].
 ///
@@ -8,7 +8,7 @@ use crate::ratio::auto_clamped_ratio::AutoClampedRatio;
 /// on the use site.
 ///
 /// If you want underflows and overflows to be automatically coerced to 0 and 1 respectively,
-/// use `AutoClampedRatio` by calling `ClampedRatio::auto_clamp`.
+/// use `SaturatingClampedRatio` by calling `ClampedRatio::auto_clamp`.
 #[derive(PartialEq, PartialOrd, Copy, Clone, Debug, Default)]
 pub struct ClampedRatio(f32);
 
@@ -45,7 +45,7 @@ impl ClampedRatio {
         self.0
     }
 
-    pub fn auto_clamp(self) -> AutoClampedRatio {
+    pub fn auto_clamp(self) -> SaturatingClampedRatio {
         self.into()
     }
 }

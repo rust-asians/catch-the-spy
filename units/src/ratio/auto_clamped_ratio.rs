@@ -4,7 +4,7 @@ use std::ops::{Add, Div, Mul, Sub};
 /// A floating-point value inside [0, 1].
 ///
 /// Unlike `ClampedRatio`, 
-/// `AutoClampedRatio` automatically rounds values `< 0` to `0` and `> 1` to `1`.
+/// `SaturatingClampedRatio` automatically rounds values `< 0` to `0` and `> 1` to `1`.
 ///
 /// This is basically a convenience wrapper around `ClampedRatio`
 /// that provides a default behavior when encountering out-of-bound values.
@@ -16,13 +16,13 @@ use std::ops::{Add, Div, Mul, Sub};
 /// Example:
 ///
 /// ```
-/// use units::ratio::auto_clamped_ratio::AutoClampedRatio;
+/// use units::ratio::auto_clamped_ratio::SaturatingClampedRatio;
 ///
 /// fn foo(
-///     a: AutoClampedRatio,
-///     b: AutoClampedRatio,
-///     c: AutoClampedRatio,
-/// ) -> AutoClampedRatio {
+///     a: SaturatingClampedRatio,
+///     b: SaturatingClampedRatio,
+///     c: SaturatingClampedRatio,
+/// ) -> SaturatingClampedRatio {
 ///     a + b - c
 /// }
 /// ```
@@ -32,12 +32,12 @@ use std::ops::{Add, Div, Mul, Sub};
 /// This happens even if `a + b - c` would have been `< 100` if we did the operations on the
 /// underlying values instead.
 ///
-/// `AutoClampedRatio` should be used as an opt-in to the auto-coercion behavior as needed;
+/// `SaturatingClampedRatio` should be used as an opt-in to the auto-coercion behavior as needed;
 /// i.e., right when you are about to do the operations, by using `ClampedRatio::auto_clamp`.
 #[derive(PartialEq, PartialOrd, Copy, Clone, Debug, Default)]
-pub struct AutoClampedRatio(ClampedRatio);
+pub struct SaturatingClampedRatio(ClampedRatio);
 
-impl AutoClampedRatio {
+impl SaturatingClampedRatio {
     /// # Safety
     ///
     /// The caller must guarantee that `value` is inside `[0, 1]`.
@@ -74,44 +74,44 @@ impl AutoClampedRatio {
     }
 }
 
-impl From<ClampedRatio> for AutoClampedRatio {
+impl From<ClampedRatio> for SaturatingClampedRatio {
     fn from(value: ClampedRatio) -> Self {
         Self::from_clamped_ratio(value)
     }
 }
 
-impl From<AutoClampedRatio> for ClampedRatio {
-    fn from(value: AutoClampedRatio) -> Self {
+impl From<SaturatingClampedRatio> for ClampedRatio {
+    fn from(value: SaturatingClampedRatio) -> Self {
         value.into_clamped_ratio()
     }
 }
 
-impl Add for AutoClampedRatio {
-    type Output = AutoClampedRatio;
+impl Add for SaturatingClampedRatio {
+    type Output = SaturatingClampedRatio;
 
     fn add(self, rhs: Self) -> Self::Output {
         Self::new(self.get() + rhs.get())
     }
 }
 
-impl Sub for AutoClampedRatio {
-    type Output = AutoClampedRatio;
+impl Sub for SaturatingClampedRatio {
+    type Output = SaturatingClampedRatio;
 
     fn sub(self, rhs: Self) -> Self::Output {
         Self::new(self.get() - rhs.get())
     }
 }
 
-impl Mul for AutoClampedRatio {
-    type Output = AutoClampedRatio;
+impl Mul for SaturatingClampedRatio {
+    type Output = SaturatingClampedRatio;
 
     fn mul(self, rhs: Self) -> Self::Output {
         Self::new(self.get() * rhs.get())
     }
 }
 
-impl Div for AutoClampedRatio {
-    type Output = AutoClampedRatio;
+impl Div for SaturatingClampedRatio {
+    type Output = SaturatingClampedRatio;
 
     fn div(self, rhs: Self) -> Self::Output {
         Self::new(self.get() / rhs.get())
