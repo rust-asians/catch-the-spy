@@ -1,10 +1,10 @@
 pub mod health;
-mod money;
-mod pressure;
-mod body_part;
-mod name;
-mod hit_rate;
-mod damage;
+pub mod money;
+pub mod pressure;
+pub mod body_part;
+pub mod name;
+pub mod hit_rate;
+pub mod damage;
 
 pub fn add(left: u64, right: u64) -> u64 {
     left + right
