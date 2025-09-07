@@ -2469,9 +2469,9 @@ dependencies = [
 
 [[package]]
 name = "isotopes"
-version = "0.4.0"
+version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d318f6300fa93aa6c813f14576b842fee75cf5e69930205359cb4614042916be"
+checksum = "660039b05dc421a4817b4945522b32c19a46474ab553a3b9a04c9f073aae2022"
 
 [[package]]
 name = "itertools"
